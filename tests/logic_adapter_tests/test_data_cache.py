@@ -1,8 +1,6 @@
 from tests.base_case import ChatBotTestCase
-from chatterbot.adapters.logic import LogicAdapter
-from chatterbot.conversation import Statement
+from chatterbot.logic import LogicAdapter
 from chatterbot.trainers import ListTrainer
-import os
 
 
 class DummyMutatorLogicAdapter(LogicAdapter):
@@ -14,9 +12,9 @@ class DummyMutatorLogicAdapter(LogicAdapter):
     def process(self, statement):
         statement.add_extra_data('pos_tags', 'NN')
 
-        self.context.storage.update(statement)
-
-        return 1, statement
+        self.chatbot.storage.update(statement)
+        statement.confidence = 1
+        return statement
 
 
 class DataCachingTests(ChatBotTestCase):
@@ -25,7 +23,7 @@ class DataCachingTests(ChatBotTestCase):
         super(DataCachingTests, self).setUp()
 
         self.chatbot.logic = DummyMutatorLogicAdapter()
-        self.chatbot.logic.set_context(self.chatbot)
+        self.chatbot.logic.set_chatbot(self.chatbot)
 
         self.chatbot.set_trainer(ListTrainer)
 
@@ -39,7 +37,7 @@ class DataCachingTests(ChatBotTestCase):
         Test that an additional data attribute can be added to the statement
         and that this attribute is saved.
         """
-        response = self.chatbot.get_response('Hello')
+        self.chatbot.get_response('Hello')
         found_statement = self.chatbot.storage.find('Hello')
         data = found_statement.serialize()
 

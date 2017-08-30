@@ -1,21 +1,23 @@
+# -*- coding: utf-8 -*-
 from chatterbot import ChatBot
-import logging
 
 
-# Uncomment the following line to enable verbose logging
+# Uncomment the following lines to enable verbose logging
+# import logging
 # logging.basicConfig(level=logging.INFO)
 
 # Create a new ChatBot instance
-bot = ChatBot('Terminal',
-    storage_adapter='chatterbot.adapters.storage.MongoDatabaseAdapter',
+bot = ChatBot(
+    'Terminal',
+    storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
     logic_adapters=[
-        'chatterbot.adapters.logic.ClosestMatchAdapter'
+        'chatterbot.logic.BestMatch'
     ],
     filters=[
         'chatterbot.filters.RepetitiveResponseFilter'
     ],
-    input_adapter='chatterbot.adapters.input.TerminalAdapter',
-    output_adapter='chatterbot.adapters.output.TerminalAdapter',
+    input_adapter='chatterbot.input.TerminalAdapter',
+    output_adapter='chatterbot.output.TerminalAdapter',
     database='chatterbot-database'
 )
 

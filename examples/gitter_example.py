@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 from chatterbot import ChatBot
 from settings import GITTER
-import logging
 
 
-# Uncomment the following line to enable verbose logging
+# Uncomment the following lines to enable verbose logging
+# import logging
 # logging.basicConfig(level=logging.INFO)
 
 
@@ -12,8 +13,8 @@ chatbot = ChatBot(
     gitter_room=GITTER['ROOM'],
     gitter_api_token=GITTER['API_TOKEN'],
     gitter_only_respond_to_mentions=False,
-    input_adapter='chatterbot.adapters.input.Gitter',
-    output_adapter='chatterbot.adapters.output.Gitter',
+    input_adapter='chatterbot.input.Gitter',
+    output_adapter='chatterbot.output.Gitter',
     trainer='chatterbot.trainers.ChatterBotCorpusTrainer'
 )
 

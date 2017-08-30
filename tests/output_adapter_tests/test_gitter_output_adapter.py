@@ -1,8 +1,8 @@
 from unittest import TestCase
 from mock import Mock
 from chatterbot.conversation import Statement
-from chatterbot.adapters.input import gitter
-from chatterbot.adapters.output import Gitter
+from chatterbot.input import gitter
+from chatterbot.output import Gitter
 
 
 class MockResponse(object):
@@ -21,7 +21,7 @@ def mock_post_response(*args, **kwargs):
 
     endpoints = {
         'https://api.gitter.im/v1/rooms': MockResponse(200, {'id': '40999743'}),
-        'https://api.gitter.im/v1/rooms/40999743/chatMessages': MockResponse(200, {})
+        'https://api.gitter.im/v1/rooms/40999743/chatMessages': MockResponse(200, data)
     }
 
     return endpoints.get(url)
